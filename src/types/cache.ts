@@ -1,3 +1,3 @@
 export type VoiceCache = {
-    [ text: string ]: Buffer
+    [ text: string ]: Buffer;
 }
