@@ -5,6 +5,7 @@ import synthesize from './routes/synthesize';
 import logger from './utils/logger';
 import Config from './config/config';
 import speakers from './routes/speakers';
+import CacheManager from './utils/cacheManager';
 
 // エラーハンドリング
 if (Config.errorHandle) {
@@ -12,6 +13,8 @@ if (Config.errorHandle) {
         logger.error(err.toString());
     });
 }
+
+CacheManager.init();
 
 const app = express();
 app.use(cors({ origin: Config.server.origin })); // cors 設定

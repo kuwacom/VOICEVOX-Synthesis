@@ -1,5 +1,6 @@
 import getAudioQuery from '@/api/getAudioQuery';
 import getSynthesisBuffer from '@/api/getSynthesisBuffer';
+import CacheManager from '@/utils/cacheManager';
 import logger from '@/utils/logger';
 import { Request, Response } from 'express';
 
@@ -25,6 +26,17 @@ export default async function synthesize(req: Request, res: Response) {
         req.query.volume = '1.0';
     }
 
+    const cache = CacheManager.searchVoiceCache(
+        Number(req.query.type),
+        req.query.text as string,
+    )
+
+    if (cache) {
+        res.type('audio/wav').status(200).end(cache);
+        logger.debug(`Response | status:200 | ${req.url}`);
+        return;
+    }
+
     const audioQuery = await getAudioQuery(
         req.query.text as string,
         Number(req.query.type)
@@ -34,7 +46,7 @@ export default async function synthesize(req: Request, res: Response) {
         res.status(500).json({
             error: "can't get audio query"
         });
-        logger.error(`Response | status:400 | ${req.url}`);
+        logger.error(`Response | status:500 | ${req.url}`);
         return;
     }
 
@@ -54,6 +66,11 @@ export default async function synthesize(req: Request, res: Response) {
         return;
     }
 
+    CacheManager.setVoiceCache(
+        Number(req.query.type),
+        req.query.text as string,
+        audioBuffer
+    )
     res.type('audio/wav').status(200).end(audioBuffer);
     logger.debug(`Response | status:200 | ${req.url}`);
     return;
