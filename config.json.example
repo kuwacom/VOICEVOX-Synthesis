@@ -1,0 +1,15 @@
+{
+    "loggerLevel": "debug",
+    "errorHandle": true,
+    "server": {
+        "host": "0.0.0.0",
+        "port": 59998,
+        "origin": "*"
+    },
+    "cache": {
+        "switch": true,
+        "maxLength": 2000,
+        "ttl": 60000
+    },
+    "VOICEVOXUrl": "https://tokyo-voice-api.example.com/v1/voicevox"
+}
