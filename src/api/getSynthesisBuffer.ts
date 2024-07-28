@@ -1,5 +1,5 @@
 import Config from "@/config/config";
-import { AudioQuery } from "@/types/response";
+import { AudioQuery } from "@/types/synthesis";
 import logger from "@/utils/logger";
 
 export default async function getSynthesisBuffer(

@@ -1,5 +1,5 @@
 import Config from '../config/config';
-import { Speakers } from '../types/response';
+import { Speakers } from '../types/speakers';
 import logger from '../utils/logger';
 
 export async function getSpeakers() {
