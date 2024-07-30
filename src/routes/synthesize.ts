@@ -50,14 +50,14 @@ export default async function synthesize(req: Request, res: Response) {
         return;
     }
 
+    audioQuery.speedScale = Number(req.query.speed);
+    audioQuery.pitchScale = Number(req.query.pitch);
+    audioQuery.volumeScale = Number(req.query.volume);
+
     const audioBuffer = await getSynthesisBuffer(
         audioQuery,
         Number(req.query.type)
     );
-
-    audioQuery.speedScale = Number(req.query.speed);
-    audioQuery.pitchScale = Number(req.query.pitch);
-    audioQuery.volumeScale = Number(req.query.volume);
 
     if (!audioBuffer) {
         res.status(500).json({
